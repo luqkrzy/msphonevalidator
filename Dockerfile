@@ -6,7 +6,7 @@ ENV TESSDATA_PREFIX=/app/tessdata
 RUN mkdir -p "/app/tmp"
 RUN mkdir -p "/app/tessdata"
 COPY /tessdata ./tessdata
-COPY ocr-parser/target/ocr-parser-0.0.1-SNAPSHOT.jar app.jar
+COPY ocr-parser/target/ocr-parser-1.0-SNAPSHOT.jar app.jar
 RUN ls -la
 RUN pwd
 ENTRYPOINT ["java", "-jar", "app.jar"]
