@@ -13,8 +13,6 @@ class OcrParserConfig {
     public Tesseract getTesseract() {
         Tesseract tesseract = new Tesseract();
         tesseract.setDatapath(System.getProperty("user.dir") + TESSDATA_PATH);
-        tesseract.setPageSegMode(1);
-        tesseract.setOcrEngineMode(1);
         return tesseract;
     }
 }

@@ -17,7 +17,7 @@ record OcrParserController(OcrParserService service) {
 
     @PostMapping("/ocr")
     ApiResponse doOcr(@Valid @RequestBody ApiRequest apiRequest, HttpServletRequest request) {
-        log.info("Request received from: " + request.getRemoteAddr() + request.getRemotePort() + " processing...");
+        log.info("Request received from: " + request.getRemoteAddr() + ":" + request.getRemotePort() + " processing...");
         return service.doOCR(apiRequest);
     }
 
