@@ -18,7 +18,7 @@ import java.util.UUID;
 @Service
 record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
 
-    private static final String IMG_PATH = System.getProperty("user.dir") + "/tmp";
+    private static final String IMG_PATH = System.getProperty("user.dir") + "/tessdata/tmp/";
 
     @Override
     public ApiResponse doOCR(ApiRequest request) {
