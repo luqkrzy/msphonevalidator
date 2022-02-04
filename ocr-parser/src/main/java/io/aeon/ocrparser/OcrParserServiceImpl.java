@@ -9,6 +9,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Service
 record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
 
-    private static final String IMG_PATH = System.getProperty("user.dir") + "/tessdata/tmp/";
+    private static final String IMG_PATH = System.getProperty("user.dir") + "/tessdata/tmp";
 
     @Override
     public ApiResponse doOCR(ApiRequest request) {
@@ -32,10 +33,12 @@ record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
         try {
             byte[] decode = Base64.decodeBase64(request.base64str());
             saveFile(filePath, decode);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Couldn't read image");
         } catch (IllegalStateException e) {
             log.error(e.getMessage());
             throw new ApiException("Corrupted data");
-        } catch (IOException e) {
+        }  catch (IOException e) {
             log.error(e.getMessage());
             throw new RuntimeException("Couldn't load data");
         }

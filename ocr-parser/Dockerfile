@@ -2,8 +2,8 @@ FROM openjdk:17-alpine
 WORKDIR app/
 RUN apk add tesseract-ocr
 ENV TESSDATA_PREFIX=/app/tessdata
-RUN mkdir -p "/app/tessdata" "/app/tessdata/tmp"
-COPY /src/main/resources/tessdata ./tessdata
+RUN mkdir -p "/app/tessdata"
+COPY /tessdata ./tessdata
 COPY target/ocr-parser-1.0-SNAPSHOT.jar app.jar
 EXPOSE 9000
 ENTRYPOINT ["java", "-jar", "app.jar"]
