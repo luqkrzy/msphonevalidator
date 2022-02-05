@@ -46,6 +46,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ExceptionMessage handle(RuntimeException ex) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        return new ExceptionMessage(status, ex.getMessage(),status.value());
+        return new ExceptionMessage(status, ex.getMessage(), status.value());
     }
 }
