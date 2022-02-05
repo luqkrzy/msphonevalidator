@@ -23,7 +23,7 @@ record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
 
     @Override
     public ApiResponse doOCR(ApiRequest request) {
-        String filePath = IMG_PATH + UUID.randomUUID() + "." + request.type();
+        String filePath = IMG_PATH + UUID.randomUUID() + ".png";
         boolean isBase64 = Base64.isBase64(request.base64str());
         if (!isBase64) {
             String corrupted_data = "Corrupted data";
@@ -35,10 +35,10 @@ record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
             saveFile(filePath, decode);
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Couldn't read image");
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException | IllegalArgumentException e) {
             log.error(e.getMessage());
             throw new ApiException("Corrupted data");
-        }  catch (IOException e) {
+        } catch (IOException e) {
             log.error(e.getMessage());
             throw new RuntimeException("Couldn't load data");
         }
@@ -47,15 +47,14 @@ record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
 
     private ApiResponse doOCR(String path) {
         String str;
+        File file = new File(path);
         try {
-            File imageFile = new File(path);
-            str = tesseract.doOCR(imageFile);
+            str = tesseract.doOCR(file);
             log.info("result: " + (!str.isBlank() ? str.trim() : "str is empty"));
-            if (imageFile.exists()) {
-                imageFile.delete();
-            }
+            delatFile(file);
         } catch (TesseractException e) {
             log.error(e.getMessage());
+            delatFile(file);
             throw new ApiException("Image doesn't contain valid alphanumeric text");
         }
         String ocr = str.replace(System.getProperty("line.separator"), "").strip();
@@ -63,11 +62,17 @@ record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
         if (!valid) {
             throw new ApiException("Image doesn't contain valid numeric code");
         }
-        return new ApiResponse(ocr) ;
+        return new ApiResponse(ocr);
+    }
+
+    private void delatFile(File imageFile) {
+        if (imageFile.exists()) {
+            imageFile.delete();
+        }
     }
 
     private boolean isValid(String ocr) {
-        if (!NumberUtils.isParsable(ocr.replaceAll("\\s+",""))) {
+        if (!NumberUtils.isParsable(ocr.replaceAll("\\s+", ""))) {
             return false;
         }
         String[] array = ocr.split(" ");

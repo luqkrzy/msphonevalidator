@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
-class TesseractParser {
+record TesseractParser() {
 
     private static final String TESSDATA_PATH = "/tessdata";
 

@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.List;
-
 @Slf4j
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -34,11 +32,10 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             @NonNull final WebRequest request) {
         log.warn(ex.getClass().getName());
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-        List<String> errors = ex.getBindingResult().getFieldErrors().stream()
-                .map(err -> err.getField() + ": " + err.getDefaultMessage())
-                .toList();
-        ExceptionNestledMessage nestledMessage = new ExceptionNestledMessage(errors, badRequest, badRequest.value());
-        return handleExceptionInternal(ex, nestledMessage, headers, badRequest, request);
+
+        ExceptionMessage apiException = new ExceptionMessage(badRequest, ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage(), badRequest.value());
+
+        return handleExceptionInternal(ex, apiException, headers, badRequest, request);
     }
 
     @ExceptionHandler(RuntimeException.class)
