@@ -29,7 +29,7 @@ class OcrParserServiceTest {
 
     @ParameterizedTest()
     @CsvFileSource(resources = "/wrongBase64.csv", maxCharsPerColumn = 90000)
-    void test_doOCR_wrongApiRequestData_throwsExcpetion(String base64) {
+    void test_doOCR_wrongApiRequestData_throwsException(String base64) {
         ApiRequest apiRequest = new ApiRequest(base64);
         assertNotNull(apiRequest);
         assertThrows(ApiException.class, () -> service.doOCR(apiRequest));
