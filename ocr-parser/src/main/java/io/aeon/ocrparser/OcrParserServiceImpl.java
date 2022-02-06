@@ -1,11 +1,12 @@
 package io.aeon.ocrparser;
 
 import io.aeon.exception.ApiException;
-import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -15,10 +16,11 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.UUID;
 
-@Slf4j
+
 @Service
 record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
 
+    private static final Logger log = LoggerFactory.getLogger(OcrParserServiceImpl.class);
     private static final String IMG_PATH = System.getProperty("user.dir") + "/tessdata/tmp";
 
     @Override
