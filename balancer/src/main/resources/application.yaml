@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: balancer
+
+server:
+  port: 9000
