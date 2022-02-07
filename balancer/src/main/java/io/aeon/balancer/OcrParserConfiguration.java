@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
 record OcrParserConfiguration() {
-
-    @Bean
-    @Primary
-    ServiceInstanceListSupplier serviceInstanceListSupplier() {
-        return new OcrParserInstanceListSuppler("ocr-parser");
-    }
+	
+	@Bean
+	@Primary
+	ServiceInstanceListSupplier serviceInstanceListSupplier() {
+		return new OcrParserInstanceListSuppler("ocr-parser");
+	}
 }

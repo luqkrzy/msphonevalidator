@@ -1,7 +1,6 @@
 package io.aeon.ocrparser;
 
 interface OcrParserService {
-
-    ApiResponse doOCR(ApiRequest request);
-
+	
+	ApiResponse doOCR(ApiRequest request);
 }

@@ -9,11 +9,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 @LoadBalancerClient(name = "ocr-parser", configuration = OcrParserConfiguration.class)
 class WebClientConfig {
-
-  @LoadBalanced
-  @Bean
-  WebClient.Builder webClientBuilder() {
-    return WebClient.builder();
-  }
-
+	
+	@LoadBalanced
+	@Bean
+	WebClient.Builder webClientBuilder() {
+		return WebClient.builder();
+	}
 }

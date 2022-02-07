@@ -16,14 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 record BalancerController(WebClient.Builder balancerWebClientBuilder) {
-
-    private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
-
-    @RequestMapping("/ocr")
-    public Mono<ApiResponse> doOcr(@RequestBody ApiRequest request, HttpServletRequest req) {
-        log.info("Received request " + req.getRemoteAddr() + ":" + req.getRemotePort() + " processing...");
-        return balancerWebClientBuilder.build().post().uri("http://ocr-parser/ocr").body(Mono.just(request), ApiRequest.class).retrieve()
-                .onStatus(HttpStatus::isError, response -> response.bodyToMono(ExceptionMessage.class).flatMap(error -> Mono.error(new ApiException(error.message()))))
-                .bodyToMono(ApiResponse.class);
-    }
+	
+	private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
+	
+	@RequestMapping("/ocr")
+	public Mono<ApiResponse> doOcr(@RequestBody ApiRequest request, HttpServletRequest req) {
+		log.info("Received request " + req.getRemoteAddr() + ":" + req.getRemotePort() + " processing...");
+		return balancerWebClientBuilder.build().post().uri("http://ocr-parser/ocr")
+									   .body(Mono.just(request), ApiRequest.class).retrieve()
+									   .onStatus(HttpStatus::isError,
+												 response -> response.bodyToMono(ExceptionMessage.class).flatMap(
+														 error -> Mono.error(new ApiException(error.message()))))
+									   .bodyToMono(ApiResponse.class);
+	}
 }
