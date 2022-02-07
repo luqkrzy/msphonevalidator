@@ -52,13 +52,13 @@ record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
 		try {
 			str = tesseract.doOCR(file);
 			log.info("result: " + (!str.isBlank() ? str.trim() : "str is empty"));
-			delatFile(file);
+			deleteFile(file);
 		} catch (TesseractException e) {
 			log.error(e.getMessage());
-			delatFile(file);
+			deleteFile(file);
 			throw new ApiException("Image doesn't contain valid alphanumeric text");
 		}
-		String ocr = str.replace(System.getProperty("line.separator"), "").strip();
+		String ocr = str.replace(System.lineSeparator(), "").strip();
 		boolean valid = isValid(ocr);
 		if (!valid) {
 			throw new ApiException("Image doesn't contain valid numeric code");
@@ -66,7 +66,7 @@ record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
 		return new ApiResponse(ocr);
 	}
 	
-	private void delatFile(File imageFile) {
+	private void deleteFile(File imageFile) {
 		if (imageFile.exists()) {
 			imageFile.delete();
 		}
