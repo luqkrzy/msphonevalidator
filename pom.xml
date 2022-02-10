@@ -5,6 +5,7 @@
 	<modules>
 		<module>ocr-parser</module>
 		<module>balancer</module>
+		<module>eureka-discovery</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
