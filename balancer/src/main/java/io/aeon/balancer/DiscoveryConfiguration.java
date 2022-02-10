@@ -4,11 +4,11 @@ import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
-record OcrParserConfiguration() {
+record DiscoveryConfiguration() {
 	
 	@Bean
 	@Primary
 	ServiceInstanceListSupplier serviceInstanceListSupplier() {
-		return new OcrParserInstanceListSuppler("ocr-parser");
+		return new OcrParserInstanceListSuppler();
 	}
 }

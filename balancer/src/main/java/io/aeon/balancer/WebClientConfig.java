@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@LoadBalancerClient(name = "ocr-parser", configuration = OcrParserConfiguration.class)
+@LoadBalancerClient(name = "ocr-parser", configuration = DiscoveryConfiguration.class)
 class WebClientConfig {
 	
 	@LoadBalanced
