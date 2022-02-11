@@ -1,4 +1,4 @@
-package io.aeon.exception;
+package io.aeon.api;
 
 import org.springframework.http.HttpStatus;
 

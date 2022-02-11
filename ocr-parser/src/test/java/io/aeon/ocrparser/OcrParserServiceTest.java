@@ -1,8 +1,8 @@
 package io.aeon.ocrparser;
 
+import io.aeon.api.ApiException;
 import io.aeon.api.ApiRequest;
 import io.aeon.api.ApiResponse;
-import io.aeon.exception.ApiException;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;

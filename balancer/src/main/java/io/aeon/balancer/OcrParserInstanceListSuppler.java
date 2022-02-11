@@ -1,6 +1,6 @@
 package io.aeon.balancer;
 
-import io.aeon.exception.ApiException;
+import io.aeon.api.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;

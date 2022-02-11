@@ -1,5 +1,7 @@
 package io.aeon.exception;
 
+import io.aeon.api.ApiException;
+import io.aeon.api.ExceptionMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +19,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
 	
-	@ExceptionHandler(value = ApiException.class)
+	@ExceptionHandler(ApiException.class)
 	public ResponseEntity<ExceptionMessage> handleApiException(ApiException ex) {
 		ExceptionMessage message = new ExceptionMessage(ex.getStatus(), ex.getMessage(), ex.getStatus().value());
 		log.warn(ex.getMessage());

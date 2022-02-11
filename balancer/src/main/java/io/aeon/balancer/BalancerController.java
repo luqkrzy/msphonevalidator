@@ -1,10 +1,10 @@
 package io.aeon.balancer;
 
+import io.aeon.api.ApiException;
 import io.aeon.api.ApiRequest;
 import io.aeon.api.ApiResponse;
-import io.aeon.exception.ApiException;
+import io.aeon.api.ExceptionMessage;
 import io.aeon.exception.ApiExceptionHandler;
-import io.aeon.exception.ExceptionMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
