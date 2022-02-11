@@ -8,6 +8,7 @@ discovery:
 client:
   name: ocr-parser
 
+
 server:
   port: 9000
 
@@ -17,3 +18,9 @@ eureka:
       defaultZone: ${EUREKA_URI:${discovery.url}}
   instance:
     preferIpAddress: true
+
+logging:
+  level:
+    com:
+      netflix:
+        discovery: off

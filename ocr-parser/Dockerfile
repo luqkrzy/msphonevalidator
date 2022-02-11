@@ -5,5 +5,5 @@ ENV TESSDATA_PREFIX=/app/tessdata
 RUN mkdir -p "/app/tessdata"
 COPY /tessdata ./tessdata
 COPY target/ocr-parser-1.0-SNAPSHOT.jar app.jar
-EXPOSE 9000
+EXPOSE 8000
 ENTRYPOINT ["java", "-jar", "app.jar"]
