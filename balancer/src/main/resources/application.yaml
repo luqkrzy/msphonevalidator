@@ -2,15 +2,18 @@ spring:
   application:
     name: balancer
 
+discovery:
+  url: http://localhost:8761/eureka
+
+client:
+  name: ocr-parser
+
 server:
   port: 9000
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+      defaultZone: ${EUREKA_URI:${discovery.url}}
   instance:
     preferIpAddress: true
-
-client:
-    name: ocr-parser
