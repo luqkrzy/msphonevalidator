@@ -1,6 +1,9 @@
 package io.aeon.balancer;
 
+import com.netflix.discovery.EurekaClient;
+import io.aeon.exception.ServiceDiscoveryException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
@@ -10,11 +13,14 @@ import java.util.List;
 
 class OcrParserInstanceListSuppler implements ServiceInstanceListSupplier {
 	
-	private static final String serviceId = "ocr-parser";
+	@Value("${client.name}")
+	private String serviceId;
 	
 	@Autowired
 	private DiscoveryClient discoveryClient;
 	
+	@Autowired
+	private EurekaClient eurekaClient;
 	
 	@Override
 	public String getServiceId() {
@@ -23,6 +29,10 @@ class OcrParserInstanceListSuppler implements ServiceInstanceListSupplier {
 	
 	@Override
 	public Flux<List<ServiceInstance>> get() {
-		return Flux.just(discoveryClient.getInstances(serviceId));
+		List<ServiceInstance> instances = discoveryClient.getInstances(serviceId);
+		if (instances.size() == 0) {
+			throw new ServiceDiscoveryException(String.format("Unable to fetch %s instances", serviceId));
+		}
+		return Flux.just(instances);
 	}
 }

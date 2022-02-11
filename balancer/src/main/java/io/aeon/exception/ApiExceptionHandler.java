@@ -17,17 +17,28 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = ApiException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ExceptionMessage handleApException(ApiException e) {
+    public ExceptionMessage handleApException(ApiException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        return new ExceptionMessage(status, e.getMessage(), status.value());
+        log.error(ex.getMessage());
+        return new ExceptionMessage(status, ex.getMessage(), status.value());
     }
-
+    
+    @ExceptionHandler(ServiceDiscoveryException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    public ExceptionMessage handleRuntimeException(ServiceDiscoveryException ex) {
+        HttpStatus status = HttpStatus.BAD_GATEWAY;
+        log.error(ex.getMessage());
+        return new ExceptionMessage(status, ex.getMessage(), status.value());
+    }
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ExceptionMessage handle(RuntimeException ex) {
+    public ExceptionMessage handleRuntimeException(RuntimeException ex) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        log.error(ex.getMessage());
         return new ExceptionMessage(status, ex.getMessage(), status.value());
     }
+    
 }
