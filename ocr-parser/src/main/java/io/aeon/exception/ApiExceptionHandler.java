@@ -9,8 +9,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -22,15 +20,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(value = ApiException.class)
 	public ResponseEntity<ExceptionMessage> handleApiException(ApiException ex) {
 		ExceptionMessage message = new ExceptionMessage(ex.getStatus(), ex.getMessage(), ex.getStatus().value());
+		log.warn(ex.getMessage());
 		return new ResponseEntity<>(message, ex.getStatus());
 	}
 	
 	@ExceptionHandler(RuntimeException.class)
-	@ResponseBody
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ExceptionMessage handle(RuntimeException ex) {
+	public ResponseEntity<ExceptionMessage> handleRuntimeException(RuntimeException ex) {
 		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-		return new ExceptionMessage(status, ex.getMessage(), status.value());
+		ExceptionMessage message = new ExceptionMessage(status, ex.getMessage(), status.value());
+		log.error(ex.getMessage());
+		return new ResponseEntity<>(message, status);
 	}
 	
 	@NonNull

@@ -1,6 +1,6 @@
 package io.aeon.balancer;
 
-import io.aeon.exception.ServiceDiscoveryException;
+import io.aeon.exception.ApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
@@ -14,9 +14,11 @@ import reactor.core.publisher.Flux;
 import java.util.List;
 
 class OcrParserInstanceListSuppler implements ServiceInstanceListSupplier {
-
+	
 	@Value("${client.name}")
 	private String serviceId;
+	
+	private static final HttpStatus SERVICE_UNAVAILABLE = HttpStatus.SERVICE_UNAVAILABLE;
 	
 	@Autowired
 	WebClient webClient;
@@ -28,8 +30,8 @@ class OcrParserInstanceListSuppler implements ServiceInstanceListSupplier {
 		return webClient.get()
 						.retrieve()
 						.toBodilessEntity()
-						.onErrorReturn(new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE))
-						.blockOptional().orElseThrow(() -> new ServiceDiscoveryException("Unable to connect to service discovery") );
+						.onErrorReturn(new ResponseEntity<>(SERVICE_UNAVAILABLE))
+						.block();
 	}
 	
 	@Override
@@ -39,10 +41,13 @@ class OcrParserInstanceListSuppler implements ServiceInstanceListSupplier {
 	
 	@Override
 	public Flux<List<ServiceInstance>> get() {
-		checkEurekaAvailability();
+		ResponseEntity<Void> response = checkEurekaAvailability();
+		if (response.getStatusCode().equals(SERVICE_UNAVAILABLE)) {
+			throw new ApiException("Unable to connect to service discovery", SERVICE_UNAVAILABLE);
+		}
 		List<ServiceInstance> instances = discoveryClient.getInstances(serviceId);
 		if (instances.size() == 0) {
-			throw new ServiceDiscoveryException(String.format("Unable to fetch %s instances", serviceId));
+			throw new ApiException(String.format("Unable to fetch %s instances", serviceId), SERVICE_UNAVAILABLE);
 		}
 		return Flux.just(instances);
 	}

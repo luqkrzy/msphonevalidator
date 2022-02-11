@@ -17,9 +17,9 @@ record DiscoveryConfiguration() {
 	}
 	
 	@Bean
-	public WebClient getWebClient(@Value("${client.name}") String val) {
+	public WebClient getWebClient(@Value("${discovery.url}") String uri) {
 		return WebClient.builder()
-						.baseUrl(val)
+						.baseUrl(uri)
 						.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 						.build();
 	}

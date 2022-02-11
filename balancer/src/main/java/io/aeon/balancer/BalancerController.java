@@ -25,8 +25,9 @@ record BalancerController(WebClient.Builder webClientBuilder) {
 		return webClientBuilder.build().post().uri("http://ocr-parser/ocr")
 							   .body(Mono.just(apiRequest), ApiRequest.class).retrieve()
 							   .onStatus(HttpStatus::isError,
-												 response -> response.bodyToMono(ExceptionMessage.class).flatMap(
-														 error -> Mono.error(new ApiException(error.message()))))
+										 response -> response.bodyToMono(ExceptionMessage.class).flatMap(
+												 error -> Mono.error(
+														 new ApiException(error.message(), HttpStatus.BAD_REQUEST))))
 									   .bodyToMono(ApiResponse.class);
 	}
 }

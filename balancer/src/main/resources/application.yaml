@@ -3,7 +3,7 @@ spring:
     name: balancer
 
 discovery:
-  url: http://localhost:8761/eureka
+  url: http://localhost:8761
 
 client:
   name: ocr-parser
@@ -15,7 +15,7 @@ server:
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URI:${discovery.url}}
+      defaultZone: ${EUREKA_URI:${discovery.url}/eureka}
   instance:
     preferIpAddress: true
 
