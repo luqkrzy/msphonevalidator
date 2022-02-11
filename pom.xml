@@ -6,6 +6,7 @@
 		<module>ocr-parser</module>
 		<module>balancer</module>
 		<module>eureka-discovery</module>
+		<module>shared</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -24,13 +25,13 @@
 		<java.version>17</java.version>
 	</properties>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+	<!--	<build>-->
+	<!--		<plugins>-->
+	<!--			<plugin>-->
+	<!--				<groupId>org.springframework.boot</groupId>-->
+	<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
+	<!--			</plugin>-->
+	<!--		</plugins>-->
+	<!--	</build>-->
 
 </project>

@@ -1,5 +1,7 @@
 package io.aeon.balancer;
 
+import io.aeon.api.ApiRequest;
+import io.aeon.api.ApiResponse;
 import io.aeon.exception.ApiException;
 import io.aeon.exception.ApiExceptionHandler;
 import io.aeon.exception.ExceptionMessage;

@@ -1,5 +1,7 @@
 package io.aeon.ocrparser;
 
+import io.aeon.api.ApiRequest;
+import io.aeon.api.ApiResponse;
 import io.aeon.exception.ApiException;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;

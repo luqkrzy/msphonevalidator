@@ -1,4 +1,4 @@
-package io.aeon.balancer;
+package io.aeon.api;
 
 import javax.validation.constraints.NotBlank;
 

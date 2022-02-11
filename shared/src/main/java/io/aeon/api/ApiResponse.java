@@ -1,4 +1,4 @@
-package io.aeon.balancer;
+package io.aeon.api;
 
 public record ApiResponse(String ocr) {
 }
