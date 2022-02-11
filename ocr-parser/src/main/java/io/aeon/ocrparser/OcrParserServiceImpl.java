@@ -7,6 +7,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -29,7 +30,7 @@ record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
 		if (!isBase64) {
 			String corrupted_data = "Corrupted data";
 			log.error(corrupted_data);
-			throw new ApiException(corrupted_data);
+			throw new ApiException(corrupted_data, HttpStatus.BAD_REQUEST);
 		}
 		try {
 			byte[] decode = Base64.decodeBase64(request.base64str());
@@ -38,7 +39,7 @@ record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
 			throw new RuntimeException("Couldn't read image");
 		} catch (IllegalStateException | IllegalArgumentException e) {
 			log.error(e.getMessage());
-			throw new ApiException("Corrupted data");
+			throw new ApiException("Corrupted data", HttpStatus.BAD_REQUEST);
 		} catch (IOException e) {
 			log.error(e.getMessage());
 			throw new RuntimeException("Couldn't load data");
@@ -56,12 +57,12 @@ record OcrParserServiceImpl(Tesseract tesseract) implements OcrParserService {
 		} catch (TesseractException e) {
 			log.error(e.getMessage());
 			deleteFile(file);
-			throw new ApiException("Image doesn't contain valid alphanumeric text");
+			throw new ApiException("Image doesn't contain valid alphanumeric text", HttpStatus.BAD_REQUEST);
 		}
 		String ocr = str.replace(System.lineSeparator(), "").strip();
 		boolean valid = isValid(ocr);
 		if (!valid) {
-			throw new ApiException("Image doesn't contain valid numeric code");
+			throw new ApiException("Image doesn't contain valid numeric code", HttpStatus.BAD_REQUEST);
 		}
 		return new ApiResponse(ocr);
 	}

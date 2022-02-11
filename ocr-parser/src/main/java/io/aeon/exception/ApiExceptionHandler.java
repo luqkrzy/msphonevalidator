@@ -20,11 +20,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
 	
 	@ExceptionHandler(value = ApiException.class)
+	public ResponseEntity<ExceptionMessage> handleApiException(ApiException ex) {
+		ExceptionMessage message = new ExceptionMessage(ex.getStatus(), ex.getMessage(), ex.getStatus().value());
+		return new ResponseEntity<>(message, ex.getStatus());
+	}
+	
+	@ExceptionHandler(RuntimeException.class)
 	@ResponseBody
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	public ExceptionMessage handleApException(ApiException e) {
-		HttpStatus status = HttpStatus.BAD_REQUEST;
-		return new ExceptionMessage(status, e.getMessage(), status.value());
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	public ExceptionMessage handle(RuntimeException ex) {
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+		return new ExceptionMessage(status, ex.getMessage(), status.value());
 	}
 	
 	@NonNull
@@ -39,11 +45,4 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, apiException, headers, badRequest, request);
 	}
 	
-	@ExceptionHandler(RuntimeException.class)
-	@ResponseBody
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ExceptionMessage handle(RuntimeException ex) {
-		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-		return new ExceptionMessage(status, ex.getMessage(), status.value());
-	}
 }
