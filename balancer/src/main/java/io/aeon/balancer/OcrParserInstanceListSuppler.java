@@ -26,29 +26,30 @@ class OcrParserInstanceListSuppler implements ServiceInstanceListSupplier {
 	@Autowired
 	private DiscoveryClient discoveryClient;
 	
-	ResponseEntity<Void> checkEurekaAvailability() {
-		return webClient.get()
-						.retrieve()
-						.toBodilessEntity()
-						.onErrorReturn(new ResponseEntity<>(SERVICE_UNAVAILABLE))
-						.block();
-	}
-	
-	@Override
-	public String getServiceId() {
-		return serviceId;
+	void checkEurekaAvailability() {
+		ResponseEntity<Void> response = webClient.get()
+												 .retrieve()
+												 .toBodilessEntity()
+												 .onErrorReturn(new ResponseEntity<>(SERVICE_UNAVAILABLE))
+												 .block();
+		
+		if (response.getStatusCode().equals(SERVICE_UNAVAILABLE)) {
+			throw new ApiException("Unable to connect to service discovery", SERVICE_UNAVAILABLE);
+		}
 	}
 	
 	@Override
 	public Flux<List<ServiceInstance>> get() {
-		ResponseEntity<Void> response = checkEurekaAvailability();
-		if (response.getStatusCode().equals(SERVICE_UNAVAILABLE)) {
-			throw new ApiException("Unable to connect to service discovery", SERVICE_UNAVAILABLE);
-		}
+		checkEurekaAvailability();
 		List<ServiceInstance> instances = discoveryClient.getInstances(serviceId);
 		if (instances.size() == 0) {
 			throw new ApiException(String.format("Unable to fetch %s instances", serviceId), SERVICE_UNAVAILABLE);
 		}
 		return Flux.just(instances);
+	}
+	
+	@Override
+	public String getServiceId() {
+		return serviceId;
 	}
 }
