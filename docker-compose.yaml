@@ -1,0 +1,23 @@
+version: '3'
+services:
+  eureka:
+    build:
+      context: eureka-discovery/
+      dockerfile: Dockerfile
+    image: eureka:1.0
+    ports:
+      - "8761:8761"
+  balancer:
+    build:
+      context: balancer/
+      dockerfile: Dockerfile
+    image: balancer:1.0
+    ports:
+      - "9000:9000"
+  ocr-parser:
+    build:
+      context: ocr-parser/
+      dockerfile: Dockerfile
+    image: ocr-parser:1.0
+    ports:
+      - "8000"
