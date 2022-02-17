@@ -1,23 +1,20 @@
 version: '3'
 services:
   eureka:
-    build:
-      context: eureka-discovery/
-      dockerfile: Dockerfile
+    build: ./eureka-discovery
     image: eureka:1.0
+    restart: always
     ports:
       - "8761:8761"
   balancer:
-    build:
-      context: balancer/
-      dockerfile: Dockerfile
+    build: ./balancer
     image: balancer:1.0
+    restart: always
     ports:
       - "9000:9000"
   ocr-parser:
-    build:
-      context: ocr-parser/
-      dockerfile: Dockerfile
+    build: ./ocr-parser
     image: ocr-parser:1.0
+    restart: always
     ports:
       - "8000"
