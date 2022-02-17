@@ -14,7 +14,7 @@
 		<version>2.6.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>io.aeon</groupId>
+	<groupId>pl.nettic</groupId>
 	<artifactId>ms-phone-validator</artifactId>
 	<version>1.0</version>
 	<name>ms-phone-validator</name>
