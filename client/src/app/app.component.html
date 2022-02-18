@@ -1,5 +1,31 @@
-<h1 class="text-3xl font-bold underline">
-  Hello world!
-</h1>
-
+<div class="flex items-center justify-center w-screen  mt-20">
+  <div>
+    <h1 class="mat-display-3 text-center">Ms Phone Parser</h1>
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>Paster screenshot</mat-label>
+      <input [(ngModel)]="base64" matInput type="text">
+      <button (click)="base64=''" *ngIf="base64" aria-label="Clear" mat-icon-button matSuffix>
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <img class="mt-2" id="pastedImage" src="assets/img2.png">
+    <mat-progress-bar *ngIf="isLoadingResults" class="w-full" mode="indeterminate"></mat-progress-bar>
+    <form>
+      <mat-form-field class="w-3/4 pr-4 mt-3">
+        <mat-label>Code</mat-label>
+        <input [formControl]="resultForm" [value]="resultForm.value" matInput placeholder="Result" required>
+      </mat-form-field>
+      <mat-form-field class="w-20 mr-2">
+        <mat-select [(ngModel)]="selectedValue" name="digit" required>
+          <mat-option *ngFor="let digit of digits" [value]="digit.value">
+            {{digit.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button (click)="onSubmit()" [disabled]="validateForm()" color="primary" mat-raised-button type="submit">process
+      </button>
+    </form>
+    <button (click)="onSubmit()" [disabled]=false color="warn" mat-raised-button type="submit">check</button>
+  </div>
+</div>
 <router-outlet></router-outlet>
