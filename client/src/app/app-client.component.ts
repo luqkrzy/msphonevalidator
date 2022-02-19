@@ -27,8 +27,10 @@ export class AppClient implements OnInit {
   }
 
   validateForm(): boolean {
-    return !this.resultForm.valid;
+    return !this.resultForm.valid ||
+      !this.isCodeValid() && this.resultForm.valid;
   }
+
 
   ngOnInit(): void {
     console.log("initialized");
@@ -78,9 +80,20 @@ export class AppClient implements OnInit {
   }
 
   private setFullScriptString(): void {
-    let codeString = `const code = '${this.code}'\n`;
-    let scriptString: string = PHONE_SCRIPT(this.selectedValue.toString());
-    this.fullScriptString = codeString.concat(scriptString);
-    console.log(this.fullScriptString);
+    this.isCodeValid();
+    if (this.code) {
+      let codeString = `const code = '${this.code}'\n`;
+      let scriptString: string = PHONE_SCRIPT(this.selectedValue.toString());
+      this.fullScriptString = codeString.concat(scriptString);
+      console.log(this.fullScriptString);
+    }
+  }
+
+  private isCodeValid(): boolean {
+    let conditions: boolean[] = [];
+    this.code.split(' ').every(field => {
+      conditions.push(field.length === this.selectedValue);
+    });
+    return conditions.every(condition => condition);
   }
 }
