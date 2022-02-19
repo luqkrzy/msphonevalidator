@@ -55,7 +55,7 @@ export class AppClient implements OnInit {
           console.log(resp);
           this.code = resp.ocr;
           this.isLoadingResults = false;
-          this.setFullScriptString(`const code = '${this.code}'\n`);
+          this.setFullScriptString();
         });
       }
     }
@@ -65,9 +65,8 @@ export class AppClient implements OnInit {
     window.open(MS_VALIDATION_UTL);
   }
 
-  private setFullScriptString(codeString: string): void {
-    this.fullScriptString = codeString.concat(PHONE_SCRIPT);
-    console.log(this.fullScriptString);
+  changeDigit() {
+    this.setFullScriptString();
   }
 
   private async readFileAsDataURL(file: File) {
@@ -76,5 +75,12 @@ export class AppClient implements OnInit {
       fileReader.onload = () => resolve(fileReader.result);
       fileReader.readAsDataURL(file);
     });
+  }
+
+  private setFullScriptString(): void {
+    let codeString = `const code = '${this.code}'\n`;
+    let scriptString: string = PHONE_SCRIPT(this.selectedValue.toString());
+    this.fullScriptString = codeString.concat(scriptString);
+    console.log(this.fullScriptString);
   }
 }

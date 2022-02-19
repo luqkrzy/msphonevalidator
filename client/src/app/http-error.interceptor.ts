@@ -28,18 +28,12 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       return error.error.message;
     } else {
       //  server side error
-      const status = error.status;
-      if (status === 0) {
-        return 'Balancer unresponsive';
-      }
-      if (status == 400) {
-        return error.error.message;
-      }
-      if (status == 404) {
-        return 'Resource not found';
-      }
-      if (status == 405) {
-        return `Method not allowed`;
+      switch (error.status) {
+        case 0:
+          return 'Balancer unresponsive';
+        case 400:
+        case 500:
+          return error.error.message;
       }
     }
     return 'Error occurred';

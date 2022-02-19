@@ -16,7 +16,7 @@
         <input [(ngModel)]="code" [formControl]="resultForm" matInput placeholder="Result" required>
       </mat-form-field>
       <mat-form-field class="w-[4rem] mr-2">
-        <mat-select [(ngModel)]="selectedValue" name="digit" required>
+        <mat-select (selectionChange)="changeDigit()" [(ngModel)]="selectedValue" name="digit" required>
           <mat-option *ngFor="let digit of digits" [value]="digit.value">
             {{digit.viewValue}}
           </mat-option>
