@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { ClientService } from './client.service';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,9 @@ export class AppClient implements OnInit {
   selectedValue = 7;
   imgSrc: any = '';
 
+  constructor(private service: ClientService) {
+  }
+
   onSubmit() {
     console.log("form is invalid", this.resultForm.invalid);
     console.log(this.resultForm.value);
@@ -30,6 +34,10 @@ export class AppClient implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("on init");
+    this.service.ping().subscribe(resp => {
+      console.log(resp);
+    });
   }
 
   onPaste(event: any) {
@@ -53,7 +61,7 @@ export class AppClient implements OnInit {
   async readFileAsDataURL(file: File) {
     return await new Promise((resolve) => {
       let fileReader = new FileReader();
-      fileReader.onload = (e) => resolve(fileReader.result);
+      fileReader.onload = () => resolve(fileReader.result);
       fileReader.readAsDataURL(file);
     });
   }

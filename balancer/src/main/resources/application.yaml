@@ -8,6 +8,8 @@ discovery:
 client:
   name: ocr-parser
 
+allowedOrigin: http://localhost:4200/
+
 
 server:
   port: 9000

@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { ClientService } from './client.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,8 +27,9 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     MatProgressBarModule,
     MatSelectModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ClientService],
   bootstrap: [AppClient]
 })
 export class AppModule {

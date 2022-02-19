@@ -3,6 +3,7 @@ package pl.nettic.balancer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,12 @@ record BalancerController(WebClient.Builder webClientBuilder) {
 										 response -> response.bodyToMono(ExceptionMessage.class).flatMap(
 												 error -> Mono.error(
 														 new ApiException(error.message(), HttpStatus.BAD_REQUEST))))
-									   .bodyToMono(ApiResponse.class);
+							   .bodyToMono(ApiResponse.class);
+	}
+	
+	@GetMapping("/ping")
+	ApiResponse ping(HttpServletRequest request) {
+		log.info("Ping received from: " + request.getRemoteAddr() + ":" + request.getRemotePort() + " processing...");
+		return new ApiResponse("ping OK!");
 	}
 }

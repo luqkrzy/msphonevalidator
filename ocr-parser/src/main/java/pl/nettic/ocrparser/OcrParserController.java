@@ -2,6 +2,7 @@ package pl.nettic.ocrparser;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,14 @@ record OcrParserController(OcrParserService service) {
 	
 	@PostMapping("/ocr")
 	ApiResponse doOcr(@Valid @RequestBody ApiRequest apiRequest, HttpServletRequest request) {
-		log.info("Request received from: " + request.getRemoteAddr() + ":" + request.getRemotePort() + " processing...");
+		log.info(
+				"Request received from: " + request.getRemoteAddr() + ":" + request.getRemotePort() + " processing...");
 		return service.doOCR(apiRequest);
+	}
+	
+	@GetMapping("/ping")
+	ApiResponse ping(HttpServletRequest request) {
+		log.info("Ping received from: " + request.getRemoteAddr() + ":" + request.getRemotePort());
+		return new ApiResponse("ping OK!");
 	}
 }
