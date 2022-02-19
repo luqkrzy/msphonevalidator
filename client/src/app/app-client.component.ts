@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ClientService } from './client.service';
 import { ApiRequest } from './apiRequest';
+import { MS_VALIDATION_UTL, PHONE_SCRIPT } from './constants';
 
 @Component({
   selector: 'app-root',
@@ -20,15 +21,9 @@ export class AppClient implements OnInit {
   selectedValue = 7;
   imgSrc: any = '';
   code: string = '';
+  fullScriptString: string = '';
 
   constructor(private service: ClientService) {
-  }
-
-  onSubmit() {
-    console.log("form is invalid", this.resultForm.invalid);
-    console.log(this.resultForm.value);
-    console.log(this.selectedValue);
-    console.log(this.base64);
   }
 
   validateForm(): boolean {
@@ -60,12 +55,22 @@ export class AppClient implements OnInit {
           console.log(resp);
           this.code = resp.ocr;
           this.isLoadingResults = false;
+          this.setFullScriptString(`const code = '${this.code}'\n`);
         });
       }
     }
   }
 
-  async readFileAsDataURL(file: File) {
+  onSubmit() {
+    window.open(MS_VALIDATION_UTL);
+  }
+
+  private setFullScriptString(codeString: string): void {
+    this.fullScriptString = codeString.concat(PHONE_SCRIPT);
+    console.log(this.fullScriptString);
+  }
+
+  private async readFileAsDataURL(file: File) {
     return await new Promise((resolve) => {
       let fileReader = new FileReader();
       fileReader.onload = () => resolve(fileReader.result);

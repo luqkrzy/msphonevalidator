@@ -22,10 +22,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button (click)="onSubmit()" [disabled]="validateForm()" color="primary" mat-raised-button type="submit">process
+      <button (click)="onSubmit()" [cdkCopyToClipboard]="fullScriptString" [disabled]="validateForm()" color="primary"
+              mat-raised-button type="submit">process
       </button>
     </form>
-    <button (click)="onSubmit()" [disabled]=false color="warn" mat-raised-button type="submit">check</button>
   </div>
 </div>
 <router-outlet></router-outlet>
