@@ -13,7 +13,7 @@
     <form>
       <mat-form-field class="w-3/4 pr-4 mt-3">
         <mat-label>Code</mat-label>
-        <input [formControl]="resultForm" [value]="resultForm.value" matInput placeholder="Result" required>
+        <input [(ngModel)]="code" [formControl]="resultForm" matInput placeholder="Result" required>
       </mat-form-field>
       <mat-form-field class="w-[4rem] mr-2">
         <mat-select [(ngModel)]="selectedValue" name="digit" required>

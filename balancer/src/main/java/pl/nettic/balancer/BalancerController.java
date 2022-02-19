@@ -16,6 +16,7 @@ import pl.nettic.exception.ApiExceptionHandler;
 import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 record BalancerController(WebClient.Builder webClientBuilder) {
@@ -23,7 +24,7 @@ record BalancerController(WebClient.Builder webClientBuilder) {
 	private static final Logger log = LoggerFactory.getLogger(ApiExceptionHandler.class);
 	
 	@RequestMapping("/ocr")
-	public Mono<ApiResponse> doOcr(@RequestBody ApiRequest apiRequest, HttpServletRequest request) {
+	public Mono<ApiResponse> doOcr(@Valid @RequestBody ApiRequest apiRequest, HttpServletRequest request) {
 		log.info("Received apiRequest " + request.getRemoteAddr() + ":" + request.getRemotePort() + " processing...");
 		return webClientBuilder.build().post().uri("http://ocr-parser/ocr")
 							   .body(Mono.just(apiRequest), ApiRequest.class).retrieve()
@@ -36,7 +37,7 @@ record BalancerController(WebClient.Builder webClientBuilder) {
 	
 	@GetMapping("/ping")
 	ApiResponse ping(HttpServletRequest request) {
-		log.info("Ping received from: " + request.getRemoteAddr() + ":" + request.getRemotePort() + " processing...");
+		log.info("Ping received from: " + request.getRemoteAddr() + ":" + request.getRemotePort());
 		return new ApiResponse("ping OK!");
 	}
 }

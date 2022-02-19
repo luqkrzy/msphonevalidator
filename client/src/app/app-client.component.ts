@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ClientService } from './client.service';
+import { ApiRequest } from './apiRequest';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppClient implements OnInit {
     {value: 7, viewValue: '7-Digit'}];
   selectedValue = 7;
   imgSrc: any = '';
+  code: string = '';
 
   constructor(private service: ClientService) {
   }
@@ -34,10 +36,7 @@ export class AppClient implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("on init");
-    this.service.ping().subscribe(resp => {
-      console.log(resp);
-    });
+    console.log("initialized");
   }
 
   onPaste(event: any) {
@@ -53,8 +52,16 @@ export class AppClient implements OnInit {
         this.imgSrc = result;
       });
       this.hideImg = false;
+      this.isLoadingResults = true;
       let buffer64 = this.imgSrc.slice(22);
       console.log('image found: ', buffer64.length !== 0);
+      if (buffer64.length !== 0) {
+        this.service.getOcr(new ApiRequest(buffer64)).subscribe(resp => {
+          console.log(resp);
+          this.code = resp.ocr;
+          this.isLoadingResults = false;
+        });
+      }
     }
   }
 

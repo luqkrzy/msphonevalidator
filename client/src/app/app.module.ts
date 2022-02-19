@@ -9,8 +9,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
-import { ClientService } from './client.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpErrorInterceptor } from './http-error.interceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -27,9 +28,15 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     MatProgressBarModule,
     MatSelectModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
-  providers: [ClientService],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpErrorInterceptor,
+    multi: true
+  }
+  ],
   bootstrap: [AppClient]
 })
 export class AppModule {

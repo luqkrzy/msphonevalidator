@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
-import { Response } from './Response';
+import { Observable } from 'rxjs';
+import { Response } from './response';
+import { ApiRequest } from './apiRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,7 @@ export class ClientService {
   constructor(private http: HttpClient) {
   }
 
-  ping(): Observable<Response> {
-    return this.http.get<Response>(`${this.API_URL}/ping`).pipe(
-      catchError((err) => {
-        console.log(err);
-        return throwError(err);
-      })
-    );
+  getOcr(request: ApiRequest): Observable<Response> {
+    return this.http.post<Response>(`${this.API_URL}/ocr`, request);
   }
 }

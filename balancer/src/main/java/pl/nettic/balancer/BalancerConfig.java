@@ -29,7 +29,7 @@ class BalancerConfig {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedOrigins(allowedOrigin)
-						.allowedMethods("GET", "PUT");
+						.allowedMethods("GET", "POST");
 			}
 		};
 	}
