@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppClient } from './app-client.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppClient
   ],
   imports: [
     BrowserModule,
@@ -27,7 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppClient]
 })
 export class AppModule {
 }
