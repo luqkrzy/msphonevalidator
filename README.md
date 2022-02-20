@@ -12,7 +12,7 @@ Simple app which help with validation during ms products installation. Features:
 * java 17
 * tesseract4j
 * spring boot
-* angular
+* angular 13
 
 ## Deploy
 
