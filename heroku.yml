@@ -1,3 +1,4 @@
 build:
   docker:
-    web: docker-compose
+    web: client/Dockerfile
+    worker: ocr-parser/Dockerfile
