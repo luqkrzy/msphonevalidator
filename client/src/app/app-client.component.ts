@@ -31,7 +31,6 @@ export class AppClient implements OnInit {
       !this.isCodeValid() && this.resultForm.valid;
   }
 
-
   ngOnInit(): void {
     console.log("initialized");
   }
@@ -91,9 +90,17 @@ export class AppClient implements OnInit {
 
   private isCodeValid(): boolean {
     let conditions: boolean[] = [];
-    this.code.split(' ').every(field => {
+    let fields: string[] = this.code.split(' ');
+    fields.forEach(field => {
       conditions.push(field.length === this.selectedValue);
     });
-    return conditions.every(condition => condition);
+    let b: boolean = true;
+    for (let i = 0; i < conditions.length; i++) {
+      b = conditions[i];
+      if (!b) {
+        return b;
+      }
+    }
+    return b;
   }
 }
