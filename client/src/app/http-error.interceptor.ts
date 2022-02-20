@@ -33,6 +33,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           return 'Balancer unresponsive';
         case 400:
         case 500:
+        case 503:
           return error.error.message;
       }
     }

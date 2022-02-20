@@ -18,3 +18,9 @@ services:
     restart: always
     ports:
       - "8000"
+  client:
+    build: ./client
+    image: client:1.0
+    restart: always
+    ports:
+      - "4200:80"
