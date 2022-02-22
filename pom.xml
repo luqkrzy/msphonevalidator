@@ -17,7 +17,7 @@
 	<groupId>pl.nettic</groupId>
 	<artifactId>ms-phone-validator</artifactId>
 	<version>1.0</version>
-	<name>ms-phone-validator</name>
+	<name>ms-product-activator</name>
 	<description>Ocr image to text parser and validator</description>
 	<packaging>pom</packaging>
 

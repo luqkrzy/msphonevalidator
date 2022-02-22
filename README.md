@@ -31,7 +31,7 @@ App consists of 4 module microservices:
 
 ## Deploy
 
-1. Got to main folder ms-phone-validator
+1. Go to main folder ms-product-activator
 2. Make sure java 17 is installed
 3. Run commands below:
 
