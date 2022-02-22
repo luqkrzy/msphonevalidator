@@ -59,6 +59,7 @@ export class AppClient implements OnInit {
           this.setFullScriptString();
         });
       }
+      this.isLoadingResults = false;
     }
   }
 
