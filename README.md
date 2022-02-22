@@ -7,11 +7,22 @@ Simple app which help with validation during ms products installation. Features:
 * validate code
 * generate JS script to use on ms site to register code
 
+App consists of 4 module microservices:
+
+- client (angular)
+- load balancer
+- service discovery server: eureka
+- ocr parser
+
+### Chart
+
+![](chart.png)
+
 ### Stack used
 
 * java 17
 * tesseract4j
-* spring boot
+* spring boot: web, cloud
 * angular 13
 
 ## Deploy
