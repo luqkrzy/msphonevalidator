@@ -16,7 +16,11 @@ App consists of 4 module microservices:
 
 ### Chart
 
-![](chart.png)
+![](pic/chart.png)
+
+### Demo
+
+![](pic/demo.gif)
 
 ### Stack used
 
@@ -28,7 +32,8 @@ App consists of 4 module microservices:
 ## Deploy
 
 1. Got to main folder ms-phone-validator
-2. Run commands below:
+2. Make sure java 17 is installed
+3. Run commands below:
 
 ```
 ./mvnw clean install
