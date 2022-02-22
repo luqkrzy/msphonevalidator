@@ -1,4 +1,4 @@
-# Ms Phone Parser
+# Ms Product Activator
 
 Simple app which help with validation during ms products installation. Features:
 
