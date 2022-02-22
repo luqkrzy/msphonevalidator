@@ -22,12 +22,12 @@ App consists of 4 module microservices:
 
 ![](pic/demo.gif)
 
-### Stack used
-
+### Stack
 * java 17
 * tesseract4j
 * spring boot: web, cloud
 * angular 13
+* docker
 
 ## Deploy
 
