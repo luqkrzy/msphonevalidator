@@ -23,6 +23,7 @@ App consists of 4 module microservices:
 ![](pic/demo.gif)
 
 ### Stack
+
 * java 17
 * tesseract4j
 * spring boot: web, cloud
@@ -30,6 +31,16 @@ App consists of 4 module microservices:
 * docker
 
 ## Deploy
+
+#### Install tesseract
+
+```
+sudo add-apt-repository ppa:alex-p/tesseract-ocr-devel
+sudo apt install -y tesseract-ocr
+sudo apt update 
+```
+
+#### Build and deploy containers
 
 1. Go to main folder ms-product-activator
 2. Make sure java 17 is installed
